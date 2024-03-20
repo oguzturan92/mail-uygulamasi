@@ -13,58 +13,40 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-    // IDENTITY AYARLARI - 1
+
     builder.Services.Configure<IdentityOptions>(options => {
 
-        // Şifre Ayarları
-        options.Password.RequireDigit = false; // Sayısal değer bulunma durumu.
-        options.Password.RequireLowercase = false; // Küçük harf bulunma durumu.
-        options.Password.RequireUppercase = false; // Büyük harf bulunma durumu.
-        // options.Password.RequiredLength = false; // Minimum karakter sayısı.
-        options.Password.RequireNonAlphanumeric = false; // Hem rakam hem harf bulunma durumu.
+        
+        options.Password.RequireDigit = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireUppercase = false;
+
+        options.Password.RequireNonAlphanumeric = false;
 
         // Kilitleme Ayarları
-        options.Lockout.MaxFailedAccessAttempts = 5; // 5 yanlış parola girme hakkı olur ve engellenir.
-        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // 5dk sonra engeli kalkar.
-        options.Lockout.AllowedForNewUsers = true; // Kilitleme işlemi, yeni kullanıcı için geçerli olur.
+        options.Lockout.MaxFailedAccessAttempts = 5; 
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+        options.Lockout.AllowedForNewUsers = true;
 
-        // Mail Ayarları
-        // options.User.AllowedUserNameCharacters = ""; // UserName içinde olmasını istediğimiz harfler
-        options.User.RequireUniqueEmail = true; // Aynı mail adresi ile bir tane kullanıcı oluşturulabilir.
-        options.SignIn.RequireConfirmedEmail = true; // Üye olduktan sonra hesap onaylansın mı.
-        options.SignIn.RequireConfirmedPhoneNumber = false; // Üye olduktan sonra telefon numarası onaylansın mı.
+        /
+        options.User.RequireUniqueEmail = true;
+        options.SignIn.RequireConfirmedEmail = true;
+        options.SignIn.RequireConfirmedPhoneNumber = false;
     });
 
     // IDENTITY AYARLARI - 2
     builder.Services.ConfigureApplicationCookie(options => {
-        // COOKIE Nedir? : Üye girişi yaptıktan sonra, çıkış yapana kadar, bizden tekrar şifre istemez. Çünkü Cookie aracılığıyla, giriş bilgilerimiz tarayıcıda tutuluyor. Başka bir Örnek : Sepete ürün ekledikten sonra üye girişi yaptığımızda, eklediğimiz sepet karşımıza gelir. Burdaki sepet bilgileri de Cookie aracılığıyla tarayıcıda tutulmuşur.
+        
 
-        options.LoginPath = "/User/UserLogin"; // Giriş yapmamış kullanıcı, yetkisi olmayan sayfaya gitmek istediğinde, yönlendirilecek sayfa.
-        options.LogoutPath = "/AdminAccount/Logout"; // Hesaptan çıkış yapılırsa, Cookie, tarayıcıdan silinmiş olacak ve kullanıcı çıkış yaptıktan sonra, parantez içindeki sayfaya yönlendirilecek.
-        options.AccessDeniedPath = "/User/UserLogin"; // Giriş yapmış kullanıcı, yetkisi olmayan sayfaya gitmek istediğinde, yönlendirilecek sayfa.
-        options.SlidingExpiration = true; // Oturum açıldıktan sonra, her istek yaptığında, kullanıcı Cookie'sinin tarayıcıdan silinmesi için extra 20dk verir. False dersek, istek yapsın yapmasın, ilk giriş yaptıktan 20dk sonra oturum sonlanır.
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // SlidingExpiration(Yukarıdaki özellik) özelliğinin varsayılan dakikasını belirler. 20 yerine 5dk ya da 1 gün diyebiliriz.
-        // Not : Tarayıcı kapandığında Cookie silinmesi için Login Action'a bak.
-        options.Cookie = new CookieBuilder
-        {
-            HttpOnly = true, // Cookie değerlerini, sadece, HttpRequest talep edebilir. JavaScript talep edemez. Biz bunu kullanıcaz. Değiştirme.
-            Name = ".medikal.Security.Cookie", // Cookie'nin nasıl adlandırılacağı. Tarayıcıda böyle görünecek.
-
-            SameSite = SameSiteMode.Strict // CSRF TOKEN. 
-        };
+        options.LoginPath = "/User/UserLogin"; 
+        options.LogoutPath = "/AdminAccount/Logout";
+        options.AccessDeniedPath = "/User/UserLogin";
+        options.SlidingExpiration = true; 
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        
     });
 
-        // MAIL AYARLARI
-    builder.Services.AddScoped<IEmailGonder, EmailHotmailGonder>(i => 
-        new EmailHotmailGonder(
-            builder.Configuration["EmailGonder:Host"],
-            builder.Configuration.GetValue<int>("EmailGonder:Port"),
-            builder.Configuration.GetValue<bool>("EmailGonder:EnableSSL"),
-            builder.Configuration["EmailGonder:UserName"],
-            builder.Configuration["EmailGonder:Password"]
-        )
-    );
-
+    
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
