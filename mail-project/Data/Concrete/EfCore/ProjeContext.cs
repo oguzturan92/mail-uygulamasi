@@ -19,17 +19,13 @@ namespace Data.Concrete.EfCore
                 .UseSqlServer(@"Server=.\SQLEXPRESS;Database=mail-project;Integrated Security=True;");
 
         }
-
-        // ENTİTY/CONCRETE içinde oluşturulan tabloların isimlerini, buraya ekliyoruz.
+        
         public DbSet<Mail> Mails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // JUNCTION tablo düzenlemesi. Çoka Çok Tabloların ID'lerini ProductCategory adında tek bir tabloda birleştireceğimizi belirtiyoruz.
-            // modelBuilder.Entity<ProductCategory>()
-                        // .HasKey(c => new {c.CategoryId, c.ProductId});
 
-            base.OnModelCreating(modelBuilder); // IDentityUserLogin hatasını engeller
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new MailConfiguration());
         }
