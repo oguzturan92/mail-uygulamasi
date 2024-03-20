@@ -1,7 +1,31 @@
 # Mail Uygulaması
 Bu mail uygulaması, login işlemi gerektirir. Kayıt olunan e-mail adresi ile, mail modülü kullanılabilir. 
 Uygulama içinde mailleşmeyi sağlar.
+Sayfalama yapıldı.
 Mail gelen kutusu, giden kutusu, önemli mailleri işaretleme, mailleri taslak olarak kaydetme ve daha sonra gönderebilme, silinen kutusuna taşıma ve silinen kutusundan silme ya da geri yükleme gibi özellikleri içerir.
+Sisteme giriş yapmış kullanıcıya gelen ve bu kullanıcının gönderdiği mailler görüntülenir.
+Kullanıcı ve mail tablosu mevcuttur.
+Mail işlemleri için başka bir tablo kullanılmamış olup, gelen kutusu, gönderilen vs kategorize etmek için, mail'e property tanımlamaları yapılmıştır.
+
+# Mail Tablosu
+    public class Mail
+    {
+        public int MailId { get; set; }
+        public int MailKimdenMailId { get; set; }
+        public string MailKimeMailName { get; set; }
+        public string MailSubject { get; set; }
+        public string MailContent { get; set; }
+        public DateTime MailDate { get; set; }
+        public bool MailRead { get; set; }
+        public bool MailImportant { get; set; }
+        public bool MailDraft { get; set; }
+        public bool MailTrash { get; set; }
+    }
+
+# Örnek Sorgular
+Gelen mailleri almak için örnek linq sorgusu : Mails = _mailService.GetAll().Where(i => i.MailKimeMailName.ToLower() == user.Email.ToLower() && !i.MailTrash).OrderByDescending(i => i.MailDate).ToList();
+
+Önemli olarak işaretlenmiş mailleri almak için örnek linq sorgusu : Mails = _mailService.GetAll().Where(i => (i.MailKimeMailName.ToLower() == user.Email.ToLower() || i.MailKimdenMailId == user.Id) && i.MailImportant && !i.MailTrash).OrderByDescending(i => i.MailDate).ToList();
 
 # Giriş
 ![Ekran görüntüsü 2024-03-20 131942](https://github.com/oguzturan92/mail-uygulamasi/assets/157590022/3313aa8a-b32f-461e-a0f6-8c4911be4dcd)
