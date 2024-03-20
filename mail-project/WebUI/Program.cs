@@ -23,18 +23,15 @@ builder.Services.AddControllersWithViews();
 
         options.Password.RequireNonAlphanumeric = false;
 
-        // Kilitleme Ayarları
         options.Lockout.MaxFailedAccessAttempts = 5; 
         options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
         options.Lockout.AllowedForNewUsers = true;
 
-        /
         options.User.RequireUniqueEmail = true;
         options.SignIn.RequireConfirmedEmail = true;
         options.SignIn.RequireConfirmedPhoneNumber = false;
     });
 
-    // IDENTITY AYARLARI - 2
     builder.Services.ConfigureApplicationCookie(options => {
         
 
@@ -57,7 +54,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-    // 404 hatası için yazdık. Error Controller içindeki Error404 Actionuna, code parametresi ile gidecek
     app.UseStatusCodePagesWithReExecute("/Error/Error404", "?code={0}");
 
 app.UseHttpsRedirection();
