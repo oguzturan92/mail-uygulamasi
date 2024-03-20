@@ -1,0 +1,98 @@
+@model MailModel
+
+<div class="col-sm-9 mail-w3agile">
+    <section class="panel">
+        <header class="panel-heading wht-bg">
+            <h4 class="gen-case">Gelen Kutusu (@Model.ToplamAdet)</h4>
+        </header>
+        <div class="panel-body minimal">
+            <div class="mail-option">
+                <div class="btn-group">
+                    <a data-original-title="Yenile" asp-controller="Home" asp-action="Index" class="btn mini tooltips">
+                        <i class=" fa fa-refresh"></i>
+                    </a>
+                </div>
+
+                @if (Model.PageInfo.TotalItems > Model.PageInfo.ItemsPerPage)
+                {
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-5 text-center">
+                                
+                            </div>
+                            <div class="col-sm-7 text-right text-center-xs">                
+                                <ul class="pagination pagination-sm m-t-none m-b-none">
+                                    @if (Model.PageInfo.CurrentPage > 1)
+                                    {
+                                        <li><a href="/Home/Index/?page=@(Model.PageInfo.CurrentPage-1)"><i class="fa fa-chevron-left"></i></a></li>
+                                    }
+
+                                    @if (true)
+                                    {
+                                        <li><a class="@(Model.PageInfo.CurrentPage == 1 ? "active":"")" href="/Home/Index/?page=1">1</a></li>
+                                    }
+                                    
+                                    @for (int i=Model.PageInfo.CurrentPage-2; i<Model.PageInfo.CurrentPage+3; i++)
+                                    {
+                                        if (i > 1 && i < Model.PageInfo.TotalPages())
+                                        {
+                                            <li><a class="@(Model.PageInfo.CurrentPage == i ? "active":"")" href="/Home/Index/?page=@i">@i</a></li>
+                                        }
+                                    }
+
+                                    @if (true)
+                                    {
+                                        <li><a class="@(Model.PageInfo.CurrentPage == Model.PageInfo.TotalPages() ? "active":"")" href="/Home/Index/?page=@Model.PageInfo.TotalPages()">@Model.PageInfo.TotalPages()</a></li>
+                                    }
+
+                                    @if (Model.PageInfo.CurrentPage < Model.PageInfo.TotalPages())
+                                    {
+                                        <li><a href="/Home/Index/?page=@(Model.PageInfo.CurrentPage+1)"><i class="fa fa-chevron-right"></i></a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <div class="table-inbox-wrap ">
+                <table class="table table-inbox table-hover">
+                    <tbody>
+                    
+                        @foreach (var item in Model.Mails)
+                        {
+                            <tr class="@(item.MailRead == false ? "unread":"")">
+                                <form asp-controller="Home" asp-action="OnemliMail" asp-route-id="@item.MailId" method="post">
+                                    <input type="hidden" name="x" value="Index">
+                                    <td class="inbox-small-cells">
+                                        <button style="background-color: #ffffff00; border:none;" type="submit">
+                                            @if (item.MailImportant)
+                                            {
+                                                <i style="color: #f78a09;" class="fa fa-star"></i>
+                                            } else
+                                            {
+                                                <i class="fa fa-star"></i>
+                                            }
+                                        </button>
+                                    </td>
+                                </form>
+                                <td class="view-message dont-show"><a asp-controller="Home" asp-action="DetailMail" asp-route-id="@item.MailId">@item.MailKimeMailName</a></td>
+                                <td class="view-message"><a asp-controller="Home" asp-action="DetailMail" asp-route-id="@item.MailId">@item.MailSubject</a></td>
+                                <td class="view-message inbox-small-cells"></td>
+                                <td>
+                                    <form asp-controller="Home" asp-action="SilinmisMail" asp-route-id="@item.MailId">
+                                        <input type="hidden" name="y" value="Index">
+                                        <button class="btn btn-danger btn-sm" type="submit">Sil</button>
+                                    </form>
+                                </td>
+                                <td class="view-message text-right">@item.MailDate</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>

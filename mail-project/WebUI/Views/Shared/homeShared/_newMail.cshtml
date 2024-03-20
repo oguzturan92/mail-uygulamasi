@@ -1,0 +1,72 @@
+@model MailModel
+
+<div class="col-sm-9 mail-w3agile">
+    <section class="panel">
+        <header class="panel-heading wht-bg">
+            <h4 class="gen-case"> YENİ MAIL</h4>
+        </header>
+        <div class="panel-body">
+            <div class="compose-mail">
+                <form role="form-horizontal" method="post" asp-controller="Home" asp-action="NewMail">
+                        <input type="hidden" asp-for="MailId">
+                    <div class="form-group">
+                        <span class="validation" asp-validation-for="MailKimeMailName"></span>
+                        <label for="to" class="">Kime:</label>
+                        <input asp-for="MailKimeMailName" type="email" tabindex="1" id="to" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <span class="validation" asp-validation-for="MailSubject"></span>
+                        <label for="subject" class="">Konu:</label>
+                        <input asp-for="MailSubject" type="text" tabindex="1" id="subject" class="form-control" required>
+                    </div>
+
+                    <div class="compose-editor">
+                        <span class="validation" asp-validation-for="MailContent"></span>
+                        <textarea asp-for="MailContent" class="wysihtml5 form-control" rows="9" id="message" required></textarea>
+                    </div>
+
+                    <div class="compose-btn">
+                        <button type="submit" class="btn btn-primary btn-sm" asp-controller="Home" asp-action="NewMail"><i class="fa fa-check"></i> Gönder</button>
+                        <a class="btn btn-sm" style="background-color: #828282; color: #fff;" asp-controller="Home" asp-action="Index"><i class="fa fa-times"></i> İptal</a>
+                        <button id="mesajBtn" type="button" class="btn btn-sm" style="border: 1px solid #828282;">Taslak</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/sweetalert2.min.js"></script>
+    <script>
+
+        $("#mesajBtn").click(async function () {
+            let entity = {
+                MailKimeMailName: $("#to").val(),
+                MailSubject: $("#subject").val(),
+                MailContent: $("#message").val()
+            };
+            $.ajax({
+                type: "Post",
+                url: "/Home/TaslakMail/",
+                data: entity,
+                success: function(func) {
+                    let result = jQuery.parseJSON(func);
+                    $("#to").val("");
+                    $("#subject").val("");
+                    $("#message").val("");
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Taslak kaydedildi.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                }
+            });
+            
+        });
+
+    </script>

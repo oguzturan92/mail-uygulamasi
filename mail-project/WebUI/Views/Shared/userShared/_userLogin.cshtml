@@ -1,0 +1,15 @@
+@model UserLoginModel
+
+<div class="reg-w3">
+    <div class="w3layouts-main">
+        <h2>GİRİŞ YAP</h2>
+        <form asp-controller="User" asp-action="UserLogin" method="post">
+            <span class="validation" asp-validation-for="Email"></span>
+            <input type="email" class="ggg" name="Email" placeholder="E-MAİL" required="">
+            <span class="validation" asp-validation-for="Password"></span>
+            <input type="password" class="ggg" name="Password" placeholder="ŞİFRE" required="">
+            <h6><a asp-controller="User" asp-action="UserSifremiUnuttum">Şifremi Unuttum</a></h6>
+            <button type="submit" class="submit-login">Giriş</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+.z-service-flex {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+.z-service-flex::before {
+    content: inherit;
+}
+.z-service-box {
+    text-align: center;
+}
+.z-service-icon {
+    text-align: center;
+}
+.z-service-title {
+    margin-top: 10px;
+    margin-left: 0px!important;
+}
+.z-about-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+.z-about-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+}
+
+.z-team-img {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    background-size: cover;
+    min-height: 360px;
+}
+.z-resp-tabs-list {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: inherit!important;
+    bottom: inherit!important;
+    top: 25px;
+}
+@media (max-width: 768px) {
+    .z-logo {
+        max-width: 250px;
+    }
+    .z-about-box {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 500px) {
+    .z-logo {
+        max-width: 200px;
+    }
+    .z-about-box {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+

@@ -1,0 +1,15 @@
+@model MailModel
+
+    <section class="panel">
+        <div class="panel-body">
+            <ul class="nav nav-pills nav-stacked labels-info ">
+                <li> <h4>En Son Mail Gönderdikleriniz</h4> </li>
+
+                @foreach (var item in Model.EnCokMesajlasilanlar)
+                {
+                   <li> <a asp-controller="Home" asp-action="NewMail"> <i class="fa fa-comments-o text-success"></i> @item.MailKimeMailName</a>  </li> 
+                }
+
+            </ul>
+        </div>
+    </section>

@@ -1,0 +1,25 @@
+
+
+<ul class="nav nav-pills nav-stacked mail-nav">
+    <li class="@ViewBag.active1">
+        <a asp-controller="Home" asp-action="Index"> <i class="fa fa-inbox"></i> Gelen Kutusu  
+            @if (ViewBag.gelenOkunmamisMailSayisi > 0)
+            {
+                <span class="label label-danger pull-right inbox-notification">@ViewBag.gelenOkunmamisMailSayisi</span>
+            }
+        </a>
+    </li>
+    <li class="@ViewBag.active2"><a asp-controller="Home" asp-action="GidenMail"> <i class="fa fa-envelope-o"></i> Giden Kutusu</a></li>
+    <li class="@ViewBag.active3"><a asp-controller="Home" asp-action="OnemliMail"> <i class="fa fa-certificate"></i> Önemli</a></li>
+    <li class="@ViewBag.active4">
+        <a asp-controller="Home" asp-action="TaslakMail"> <i class="fa fa-file-text-o"></i> Taslaklar
+        
+            @if (ViewBag.taslakMailSayisi > 0)
+            {
+                <span class="label label-info pull-right inbox-notification">@ViewBag.taslakMailSayisi</span>
+            }
+            
+        </a>
+    </li>
+    <li class="@ViewBag.active5"><a asp-controller="Home" asp-action="SilinmisMail"> <i class="fa fa-trash-o"></i> Silinmiş</a></li>
+</ul>

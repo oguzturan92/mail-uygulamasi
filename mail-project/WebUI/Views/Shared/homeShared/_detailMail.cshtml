@@ -1,0 +1,33 @@
+@model MailModel
+
+<div class="col-sm-9 mail-w3agile">
+    <section class="panel">
+        <header class="panel-heading wht-bg">
+            <h4 class="gen-case"> Mail Detay</h4>
+        </header>
+        <div class="panel-body">
+            <div class="compose-mail">
+                <form role="form-horizontal" method="post" asp-controller="Home" asp-action="NewMail">
+                    <div class="form-group">
+                        <label for="to" class="">Kime:</label>
+                        <input value="@Model.Mail.MailKimeMailName" type="email" tabindex="1" id="to" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject" class="">Konu:</label>
+                        <input value="@Model.Mail.MailSubject" type="text" tabindex="1" id="subject" class="form-control" required>
+                    </div>
+
+                    <div class="compose-editor">
+                        <textarea class="wysihtml5 form-control" rows="9" id="message" required>@Model.Mail.MailContent</textarea>
+                    </div>
+
+                    <div class="compose-btn">
+                        <a class="btn btn-sm" style="background-color: #828282; color: #fff;" asp-controller="Home" asp-action="Index"><i class="fa fa-times"></i> Geri</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
